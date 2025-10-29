@@ -5,7 +5,7 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: "/energy-glow-up-hub/",
+  base: "/elinametacards-miniapp/",
   server: {
     host: "::",
     port: 8080,
