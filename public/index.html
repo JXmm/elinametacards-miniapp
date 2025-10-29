@@ -1,69 +1,136 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
+<html lang="ru">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <!-- Telegram Web App Meta Tags -->
+    <!-- Telegram Web App Meta Tags (для оптимизации, но страница будет работать без iframe rewriting) -->
     <meta property="telegram:web_app" content="1">
     <meta name="msapplication-tap-highlight" content="no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="format-detection" content="telephone=no">
-    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
-    <meta name="referrer" content="no-referrer-when-downgrade">
-    <title>Элина Гонцова - Энергокоуч</title>
-    <meta name="description" content="Дипломированный энергокоуч Элина Гонцова">
 
-    <!-- Telegram Web App -->
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <title>Элина Гонцова - Мини-приложение</title>
+    <meta name="description" content="Энерготерапия по Методу Соло, расстановки, трансформация жизни">
+
+    <!-- Favicon (добавьте нужный файл в папку) -->
+    <link rel="icon" type="image/x-icon" href="./favicon.ico">
 
     <style>
-        body {
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: linear-gradient(135deg, #f59e0b, #eab308);
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
             color: white;
             min-height: 100vh;
-        }
-
-        .container {
-            max-width: 400px;
-            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             padding: 20px;
-            text-align: center;
         }
 
-        .profile {
-            margin-bottom: 30px;
+        .mini-app {
+            max-width: 450px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .avatar {
-            width: 120px;
-            height: 120px;
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
-            margin: 0 auto 20px;
-            border: 4px solid rgba(255,255,255,0.3);
+            margin: 0 auto 15px;
+            border: 3px solid rgba(255, 255, 255, 0.8);
             object-fit: cover;
+            display: block;
         }
 
         .name {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 10px;
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         .title {
-            font-size: 16px;
+            font-size: 14px;
             opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .content {
+            padding: 30px 20px;
+        }
+
+        .services {
+            display: grid;
+            gap: 12px;
             margin-bottom: 30px;
         }
 
-        .buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
+        .service-card {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .service-card:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .service-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .service-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .service-desc {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 11px;
+            opacity: 0.7;
+        }
+
+        .action-buttons {
+            display: grid;
+            gap: 10px;
+            margin-top: 30px;
         }
 
         .btn {
@@ -75,158 +142,255 @@
             border-radius: 12px;
             text-decoration: none;
             font-weight: 600;
-            transition: all 0.3s ease;
-            border: none;
             font-size: 16px;
             cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
         }
 
         .btn-primary {
-            background: rgba(255,255,255,0.2);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.3);
-            color: white;
+            background: rgba(255, 255, 255, 0.95);
+            color: #d97706;
         }
 
         .btn-primary:hover {
-            background: rgba(255,255,255,0.3);
+            background: rgba(255, 255, 255, 1);
             transform: scale(1.02);
         }
 
         .btn-outline {
-            background: white;
-            color: #f59e0b;
-            border: 2px solid white;
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.8);
         }
 
         .btn-outline:hover {
-            background: rgba(255,255,255,0.9);
+            background: rgba(255, 255, 255, 0.1);
             transform: scale(1.02);
         }
 
-        .footer {
-            margin-top: 40px;
-            font-size: 12px;
-            opacity: 0.7;
+        /* Success message animation */
+        .success-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(16, 185, 129, 0.95);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            text-align: center;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translate(-50%, -100%);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, -50%);
+                opacity: 1;
+            }
+        }
+
+        .success-message.fade-out {
+            animation: fadeOut 0.3s ease-out forwards;
+        }
+
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                transform: translate(-50%, -20%);
+            }
+        }
+
+        /* Telegram responsive */
+        @media (max-height: 600px) {
+            .mini-app {
+                transform: scale(0.9);
+                transform-origin: center;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="profile">
-            <img src="./elina-photo-CDW-546J.png" alt="Элина Гонцова" class="avatar">
+    <div class="mini-app">
+        <div class="header">
+    <img src="elina-photo.png" alt="Элина Гонцова" class="avatar" onerror="console.log('Photo failed'); this.style.display='none';">
             <div class="name">Элина Гонцова</div>
-            <div class="title">Энергокоуч | Терапевт</div>
+            <div class="title">Дипломированный Энергокоуч</div>
         </div>
 
-        <div class="buttons">
-            <button class="btn btn-primary" onclick="sendMessage('contact_therapy')">
-                <span>💫</span>
-                Записаться на терапию
-            </button>
+        <div class="content">
+            <div class="services">
+                <div class="service-card" onclick="selectService('energy-therapy')">
+                    <div class="service-icon">💫</div>
+                    <div class="service-title">Энерготерапия</div>
+                    <div class="service-desc">Трансформация по Методу Соло</div>
+                </div>
 
-            <button class="btn btn-outline" onclick="sendMessage('visit_channel')">
-                <span>📺</span>
-                Перейти в канал
-            </button>
+                <div class="service-card" onclick="selectService('consultation')">
+                    <div class="service-icon">🎭</div>
+                    <div class="service-title">Групповые Расстановки</div>
+                    <div class="service-desc">Работа с семейными системами</div>
+                </div>
 
-            <button class="btn btn-primary" onclick="sendMessage('razbor')">
-                <span>🎭</span>
-                Первая терапия бесплатно
-            </button>
-        </div>
+                <div class="service-card" onclick="selectService('personal')">
+                    <div class="service-icon">👤</div>
+                    <div class="service-title">Личная Терапия</div>
+                    <div class="service-desc">Индивидуальная работа</div>
+                </div>
 
-        <div class="footer">
-            Элина Гонцова — Энергокоуч<br>
-            Управление энергией и трансформация жизни
+                <div class="service-card" onclick="selectService('free-session')">
+                    <div class="service-icon">🎁</div>
+                    <div class="service-title">Бесплатная Консультация</div>
+                    <div class="service-desc">Первая сессия энерготерапии</div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn btn-primary" onclick="sendData('book_session')">
+                    <span>📅</span>
+                    Записаться на прием
+                </button>
+
+                <button class="btn btn-outline" onclick="sendData('channel')">
+                    <span>📺</span>
+                    Перейти в канал
+                </button>
+            </div>
+
+            <div class="footer">
+                Надежда доступна каждому правому человеку.<br>
+                Вот. Мы видим.
+            </div>
         </div>
     </div>
 
+    <!-- Simple success notification (no external libraries) -->
+    <div id="success-notification" class="success-message" style="display: none;">
+        🎉 Спасибо! Мы свяжемся с вами.
+    </div>
+
     <script>
-        // Telegram Web App initialization
-        let tg;
+        // Telegram Web App initialization (работает без iframe ограничений)
+        let tg = null;
+        let isInTelegram = false;
+
         try {
-            tg = window.Telegram?.WebApp;
-            if (tg) {
+            if (window.Telegram?.WebApp) {
+                tg = window.Telegram.WebApp;
+                isInTelegram = true;
+
+                // Initialize Web App
                 tg.ready();
                 tg.expand();
 
-                // Set theme colors
+                // Optional: Set theme colors
                 tg.setHeaderColor('#f59e0b');
                 tg.setBackgroundColor('#ffffff');
+
+                console.log('Telegram Web App initialized');
             } else {
-                console.log('Telegram Web App not available');
+                console.log('Not in Telegram Web App');
             }
         } catch (error) {
             console.log('Telegram Web App error:', error);
         }
 
-        // Send data to bot
-        function sendMessage(action) {
-            const data = { action: action };
+        // Service selection handler
+        function selectService(serviceType) {
+            const serviceNames = {
+                'energy-therapy': 'Энерготерапия',
+                'consultation': 'Групповые расстановки',
+                'personal': 'Личная терапия',
+                'free-session': 'Бесплатная консультация'
+            };
+
+            sendData(`interested_${serviceType}`, `Интересует: ${serviceNames[serviceType]}`);
+        }
+
+        // Main data sending function
+        function sendData(action, message = '') {
+            const data = {
+                action: action,
+                message: message,
+                timestamp: Date.now(),
+                userAgent: navigator.userAgent
+            };
 
             try {
-                if (tg && tg.sendData) {
-                    tg.sendData(JSON.stringify(data));
+                const urls = {
+                    'book_session': 'https://t.me/elina_goncova?text=Хочу+записаться+на+терапию',
+                    'channel': 'https://t.me/energy_elina',
+                    'interested_energy-therapy': 'https://t.me/elina_goncova?text=Интересует+энерготерапия',
+                    'interested_consultation': 'https://t.me/elina_goncova?text=Интересуют+расстановки',
+                    'interested_personal': 'https://t.me/elina_goncova?text=Хочу+личную+терапию',
+                    'interested_free-session': 'https://t.me/elina_goncova?start=free_consultation'
+                };
 
-                    // Show notification
-                    if (tg.showPopup) {
-                        tg.showPopup({
-                            title: action === 'contact_therapy' ? 'Запись на терапию' :
-                                   action === 'visit_channel' ? 'Переход в канал' :
-                                   'Бесплатная терапия',
-                            message: 'Спасибо за интерес! Мы свяжемся с вами.',
-                            buttons: [{type: 'close'}]
-                        });
+                if (urls[action]) {
+                    if (isInTelegram && tg && tg.openLink) {
+                        // Правильный способ abrir ссылок в Telegram Mini App
+                        tg.openLink(urls[action], { try_instant_view: false });
+                    } else {
+                        // Browser fallback
+                        window.open(urls[action], '_blank');
                     }
-                } else {
-                    // Fallback for web version
-                    const urls = {
-                        contact_therapy: 'https://t.me/elina_goncova',
-                        visit_channel: 'https://t.me/energy_elina',
-                        razbor: 'https://t.me/elina_goncova?text=РАЗБОР'
-                    };
 
-                    window.open(urls[action] || 'https://t.me/elina_goncova', '_blank');
+                    // Отправить данные в бот если возможно
+                    if (isInTelegram && tg && tg.sendData) {
+                        tg.sendData(JSON.stringify(data));
+                    }
+
+                    showSuccess();
                 }
             } catch (error) {
-                console.error('Error sending message:', error);
-                // Fallback
-                window.open('https://t.me/elina_goncova', '_blank');
+                console.error('Error sending data:', error);
+                // Force fallback
+                if (isInTelegram && tg && tg.openTelegramLink) {
+                    tg.openTelegramLink('https://t.me/elina_goncova');
+                } else {
+                    window.open('https://t.me/elina_goncova', '_blank');
+                }
             }
         }
 
-        // Handle Android back button
-        if (tg) {
-            tg.onEvent('backButtonClicked', function(){
-                tg.close();
-            });
+        // Success notification
+        function showSuccess(customMessage = 'Спасибо! Мы свяжемся с вами.') {
+            const notification = document.getElementById('success-notification');
+            notification.textContent = customMessage;
+            notification.style.display = 'block';
 
-            tg.BackButton.show();
+            // Auto-hide after 3 seconds
+            setTimeout(() => {
+                notification.classList.add('fade-out');
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                    notification.classList.remove('fade-out');
+                }, 300);
+            }, 3000);
+        }
+
+        // Handle Telegram-specific features
+        if (isInTelegram) {
+            // Back button handler
+            if (tg.BackButton?.onClick) {
+                tg.BackButton.onClick(() => {
+                    if (confirm('Вернуться в Telegram?')) {
+                        tg.close();
+                    }
+                });
+                tg.BackButton.setVisibility(true);
+            }
+        } else {
+            // Browser-specific behavior
+            console.log('Это Mini App работает лучше в Telegram! 🔥');
         }
     </script>
-    <!-- Start Single Page Apps for GitHub Pages -->
-    <script type="text/javascript">
-      // Single Page Apps for GitHub Pages
-      // MIT License (https://github.com/rafgraph/spa-github-pages)
-      // This script checks to see if a redirect is present in the query string,
-      // converts it back to the correct url and adds it to the
-      // browser's history using window.history.replaceState(...),
-      // which won't cause the browser to attempt to load the new url.
-      // When the single page app is loaded further down in this file,
-      // the correct url will be waiting in the browser's history for
-      // the single page app to route accordingly.
-      (function(l) {
-        if (l.search[1] === '/' ) {
-          var decoded = l.search.slice(1).split('&').map(function(s) {
-            return s.replace(/~and~/g, '&')
-          }).join('?');
-          window.history.replaceState(null, null,
-              l.pathname.slice(0, -1) + decoded + l.hash
-          );
-        }
-      }(window.location))
-    </script>
-    <!-- End Single Page Apps for GitHub Pages -->
-  </body>
+</body>
 </html>
