@@ -7,11 +7,27 @@ import elinaPhoto from "@/assets/elina-photo.png";
 
 const Index = () => {
   const handleTelegramContact = () => {
-    window.open('https://t.me/elina_goncova', '_blank');
+    if (window.Telegram?.WebApp) {
+      window.Telegram.WebApp.sendData(JSON.stringify({ action: 'contact_therapy' }));
+    } else {
+      window.open('https://t.me/elina_goncova', '_blank');
+    }
   };
 
   const handleChannelVisit = () => {
-    window.open('https://t.me/energy_elina', '_blank');
+    if (window.Telegram?.WebApp) {
+      window.Telegram.WebApp.sendData(JSON.stringify({ action: 'visit_channel' }));
+    } else {
+      window.open('https://t.me/energy_elina', '_blank');
+    }
+  };
+
+  const handleRazbor = () => {
+    if (window.Telegram?.WebApp) {
+      window.Telegram.WebApp.sendData(JSON.stringify({ action: 'razbor' }));
+    } else {
+      window.open('https://t.me/elina_goncova', '_blank');
+    }
   };
 
   return (
@@ -113,10 +129,10 @@ const Index = () => {
             <p className="text-muted-foreground mb-6 max-w-xl mx-auto">
               Готовы к трансформациям и росту? Напишите мне слово <span className="font-bold text-primary">РАЗБОР</span> в личные сообщения
             </p>
-            <Button 
-              variant="card" 
+            <Button
+              variant="card"
               size="xl"
-              onClick={handleTelegramContact}
+              onClick={handleRazbor}
             >
               <MessageCircle className="w-5 h-5" />
               Написать РАЗБОР
@@ -240,6 +256,7 @@ const Index = () => {
               description="Энергопрактики, расклады, инсайты и поддержка на пути трансформации"
               buttonText="Подписаться на канал"
               url="https://t.me/energy_elina"
+              onClick={handleChannelVisit}
             />
 
             <ContactCard
@@ -248,6 +265,7 @@ const Index = () => {
               description="Напишите мне напрямую для записи на энерготерапию или консультацию"
               buttonText="Написать в Telegram"
               url="https://t.me/elina_goncova"
+              onClick={handleTelegramContact}
             />
           </div>
         </div>
